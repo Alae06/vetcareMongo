@@ -112,6 +112,14 @@ const VisitDetails = () => {
                   )}
                 </ListGroup.Item>
                 <ListGroup.Item>
+                  <strong>Owner:</strong>{' '}
+                  {visit.pet && visit.pet.owner ? (
+                    <Link to={`/owners/${visit.pet.owner._id}`}>
+                      {visit.pet.owner.firstName} {visit.pet.owner.lastName}
+                    </Link>
+                  ) : 'Unknown'}
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <strong>Veterinarian:</strong>{' '}
                   {visit.veterinarian && (
                     <Link to={`/vets/${visit.veterinarian._id}`}>

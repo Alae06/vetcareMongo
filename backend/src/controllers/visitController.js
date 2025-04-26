@@ -6,7 +6,7 @@ const Veterinarian = require('../models/Veterinarian');
 exports.getAllVisits = async (req, res) => {
   try {
     const visits = await Visit.find()
-      .populate('pet', 'name species breed')
+      .populate({ path: 'pet', select: 'name species breed owner', populate: { path: 'owner', select: 'firstName lastName' } })
       .populate('veterinarian', 'firstName lastName');
     res.status(200).json(visits);
   } catch (error) {
@@ -26,7 +26,7 @@ exports.getVisitsByPet = async (req, res) => {
     }
     
     const visits = await Visit.find({ pet: petId })
-      .populate('pet', 'name species breed')
+      .populate({ path: 'pet', select: 'name species breed owner', populate: { path: 'owner', select: 'firstName lastName' } })
       .populate('veterinarian', 'firstName lastName')
       .sort({ date: -1 }); // Most recent visits first
       
@@ -40,7 +40,7 @@ exports.getVisitsByPet = async (req, res) => {
 exports.getVisitById = async (req, res) => {
   try {
     const visit = await Visit.findById(req.params.id)
-      .populate('pet')
+      .populate({ path: 'pet', populate: { path: 'owner', select: 'firstName lastName' } })
       .populate('veterinarian');
       
     if (!visit) {
@@ -75,7 +75,7 @@ exports.createVisit = async (req, res) => {
     
     // Populate related fields before returning
     const populatedVisit = await Visit.findById(savedVisit._id)
-      .populate('pet', 'name species breed')
+      .populate({ path: 'pet', select: 'name species breed owner', populate: { path: 'owner', select: 'firstName lastName' } })
       .populate('veterinarian', 'firstName lastName');
     
     res.status(201).json(populatedVisit);
@@ -108,7 +108,7 @@ exports.updateVisit = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     )
-      .populate('pet', 'name species breed')
+      .populate({ path: 'pet', select: 'name species breed owner', populate: { path: 'owner', select: 'firstName lastName' } })
       .populate('veterinarian', 'firstName lastName');
     
     if (!updatedVisit) {

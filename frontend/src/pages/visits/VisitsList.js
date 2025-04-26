@@ -79,7 +79,7 @@ const VisitsList = () => {
                     <tr>
                       <th>Date</th>
                       <th>Pet</th>
-                      <th>Owner</th>
+                      {/* <th>Owner</th> */}
                       <th>Veterinarian</th>
                       <th>Reason</th>
                       <th>Actions</th>
@@ -96,13 +96,13 @@ const VisitsList = () => {
                             </Link>
                           ) : 'Unknown'}
                         </td>
-                        <td>
+                        {/* <td>
                           {visit.pet && visit.pet.owner ? (
                             <Link to={`/owners/${visit.pet.owner._id}`}>
                               {`${visit.pet.owner.firstName} ${visit.pet.owner.lastName}`}
                             </Link>
                           ) : 'Unknown'}
-                        </td>
+                        </td> */}
                         <td>
                           {visit.veterinarian ? (
                             <Link to={`/vets/${visit.veterinarian._id}`}>
